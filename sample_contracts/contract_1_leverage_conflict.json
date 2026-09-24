@@ -1,0 +1,83 @@
+{
+  "contract_title": "Apex Industrial Holdings - Senior Credit Agreement",
+  "borrower": "Apex Industrial Holdings LLC",
+  "lender": "Global Commerce Bank",
+  "variables": [
+    {
+      "name": "total_debt",
+      "var_type": "real",
+      "description": "Consolidated Total Indebtedness",
+      "unit": "USD"
+    },
+    {
+      "name": "ebitda",
+      "var_type": "real",
+      "description": "Consolidated Trailing Twelve-Month EBITDA",
+      "unit": "USD"
+    },
+    {
+      "name": "interest_expense",
+      "var_type": "real",
+      "description": "Consolidated Interest Expense",
+      "unit": "USD"
+    },
+    {
+      "name": "is_acquisition",
+      "var_type": "boolean",
+      "description": "Whether borrower is within a Material Permitted Acquisition Period",
+      "unit": "Boolean"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_id": "Section 6.01",
+      "title": "Consolidated Leverage Ratio (Standard)",
+      "original_text": "The Borrower shall not permit the Consolidated Leverage Ratio as of the end of any Fiscal Quarter of the Borrower to exceed 3.50 to 1.00...",
+      "formula": "(is_acquisition == False) => (total_debt <= 3.5 * ebitda)",
+      "condition": "True",
+      "referenced_variables": ["total_debt", "ebitda", "is_acquisition"]
+    },
+    {
+      "clause_id": "Section 6.01(Step-Up)",
+      "title": "Consolidated Leverage Ratio Step-Up",
+      "original_text": "...provided, however, that upon the consummation of any Material Permitted Acquisition, such ratio threshold shall automatically step up to 4.00 to 1.00...",
+      "formula": "(is_acquisition == True) => (total_debt <= 4.0 * ebitda)",
+      "condition": "True",
+      "referenced_variables": ["total_debt", "ebitda", "is_acquisition"]
+    },
+    {
+      "clause_id": "Section 6.02",
+      "title": "Maximum Debt Ceiling with EBITDA Threshold",
+      "original_text": "In no event shall Consolidated Total Indebtedness exceed $30,000,000 whenever Consolidated EBITDA is less than $8,000,000.",
+      "formula": "(ebitda < 8000000) => (total_debt <= 30000000)",
+      "condition": "True",
+      "referenced_variables": ["total_debt", "ebitda"]
+    },
+    {
+      "clause_id": "Section 6.03",
+      "title": "Minimum Interest Coverage Ratio",
+      "original_text": "The Borrower shall maintain an Interest Coverage Ratio of not less than 2.50 to 1.00 at all times.",
+      "formula": "ebitda >= 2.5 * interest_expense",
+      "condition": "True",
+      "referenced_variables": ["ebitda", "interest_expense"]
+    }
+  ],
+  "invariants": [
+    {
+      "invariant_id": "INV-001",
+      "name": "Acquisition Step-Up Compatibility with Hard Debt Ceiling",
+      "invariant_type": "quantitative_consistency",
+      "description": "The 4.0x leverage step-up capacity must never exceed the Section 6.02 $30M debt cap when EBITDA is under $8M.",
+      "formal_condition": "(is_acquisition == True and ebitda < 8000000 and ebitda > 0) => (4.0 * ebitda <= 30000000)",
+      "target_clause_ids": ["Section 6.01(Step-Up)", "Section 6.02"]
+    },
+    {
+      "invariant_id": "INV-002",
+      "name": "Non-negative Solvency Invariant",
+      "invariant_type": "quantitative_consistency",
+      "description": "EBITDA and Debt remain non-negative in all valid states.",
+      "formal_condition": "total_debt >= 0 and ebitda >= 0",
+      "target_clause_ids": ["Section 6.01", "Section 6.02"]
+    }
+  ]
+}

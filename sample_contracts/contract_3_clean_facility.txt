@@ -1,0 +1,12 @@
+REVOLVING CREDIT FACILITY AGREEMENT
+
+ARTICLE V: COVENANTS AND SAFEGUARDS
+
+Section 5.01. Fixed Charge Coverage Ratio.
+The Borrower shall ensure that the Consolidated Fixed Charge Coverage Ratio (Consolidated EBITDAR to Consolidated Fixed Charges) as of the final day of each fiscal month shall not be less than 1.25 to 1.00.
+
+Section 5.02. Maximum Permitted Senior Debt.
+Consolidated Senior Indebtedness shall at no time exceed 2.75 times trailing twelve months Consolidated EBITDA.
+
+Section 5.03. Absolute Priority and Conflict Resolution.
+Notwithstanding any other clause, schedule, or amendment to the contrary, in the event of any conflict between the numerical covenants in this Article V and any other borrowing threshold, the more restrictive requirement shall control.

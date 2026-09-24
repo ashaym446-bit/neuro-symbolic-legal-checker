@@ -1,0 +1,12 @@
+TERM LOAN FACILITY AGREEMENT
+
+ARTICLE VIII: EVENTS OF DEFAULT AND REMEDIES
+
+Section 8.01. Notice and Mandatory Grace Period.
+Upon the occurrence of any payment default under Article II, the Administrative Agent shall deliver written Notice of Default to the Borrower. The Borrower shall be entitled to an absolute Cure Period of not less than 15 Business Days following the date of receipt of such Notice of Default before any remedial enforcement action may be initiated.
+
+Section 8.02. Immediate Acceleration Remedy.
+If any payment of principal or interest remains unpaid for five (5) Business Days after the scheduled payment date, the Administrative Agent, at the request of the Required Lenders, may by notice to the Borrower declare the entire outstanding principal amount of the Loans to be immediately due and payable without presentment or further demand.
+
+Section 8.03. Waiver of Prepayment Premium.
+No prepayment premium shall be assessed if mandatory redemption is triggered solely by an Involuntary Expropriation Event occurring more than 30 days prior to Maturity.

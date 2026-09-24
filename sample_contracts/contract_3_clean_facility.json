@@ -1,0 +1,59 @@
+{
+  "contract_title": "Sovereign Energy Partners - Revolving Credit Facility",
+  "borrower": "Sovereign Energy Corp",
+  "lender": "First Capital Syndicate",
+  "variables": [
+    {
+      "name": "senior_debt",
+      "var_type": "real",
+      "description": "Consolidated Senior Indebtedness",
+      "unit": "USD"
+    },
+    {
+      "name": "ebitda",
+      "var_type": "real",
+      "description": "Consolidated Trailing Twelve-Month EBITDA",
+      "unit": "USD"
+    },
+    {
+      "name": "ebitdar",
+      "var_type": "real",
+      "description": "Consolidated EBITDAR",
+      "unit": "USD"
+    },
+    {
+      "name": "fixed_charges",
+      "var_type": "real",
+      "description": "Consolidated Fixed Charges",
+      "unit": "USD"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_id": "Section 5.01",
+      "title": "Fixed Charge Coverage Ratio",
+      "original_text": "The Borrower shall ensure that the Consolidated Fixed Charge Coverage Ratio as of the final day of each fiscal month shall not be less than 1.25 to 1.00.",
+      "formula": "ebitdar >= 1.25 * fixed_charges",
+      "condition": "True",
+      "referenced_variables": ["ebitdar", "fixed_charges"]
+    },
+    {
+      "clause_id": "Section 5.02",
+      "title": "Maximum Permitted Senior Debt",
+      "original_text": "Consolidated Senior Indebtedness shall at no time exceed 2.75 times trailing twelve months Consolidated EBITDA.",
+      "formula": "senior_debt <= 2.75 * ebitda",
+      "condition": "True",
+      "referenced_variables": ["senior_debt", "ebitda"]
+    }
+  ],
+  "invariants": [
+    {
+      "invariant_id": "INV-SOUND-001",
+      "name": "Senior Indebtedness Bound",
+      "invariant_type": "quantitative_consistency",
+      "description": "Senior Debt cannot exceed 2.75 times EBITDA.",
+      "formal_condition": "senior_debt <= 2.75 * ebitda",
+      "target_clause_ids": ["Section 5.02"]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "contract_title": "Term Loan Facility - Notice & Acceleration Schedule",
+  "borrower": "Pacific Infrastructure Corp",
+  "lender": "Consortium of Institutional Lenders",
+  "variables": [
+    {
+      "name": "mandatory_grace_period_days",
+      "var_type": "integer",
+      "description": "Mandatory Cure Period in business days following Notice of Default",
+      "unit": "Days"
+    },
+    {
+      "name": "acceleration_threshold_days",
+      "var_type": "integer",
+      "description": "Days of non-payment required before lender can declare immediate acceleration",
+      "unit": "Days"
+    },
+    {
+      "name": "cure_days_elapsed",
+      "var_type": "integer",
+      "description": "Days currently elapsed since formal notice",
+      "unit": "Days"
+    }
+  ],
+  "clauses": [
+    {
+      "clause_id": "Section 8.01",
+      "title": "Notice and Mandatory Grace Period",
+      "original_text": "The Borrower shall be entitled to an absolute Cure Period of not less than 15 Business Days following the date of receipt of such Notice of Default before any remedial enforcement action may be initiated.",
+      "formula": "mandatory_grace_period_days == 15",
+      "condition": "True",
+      "referenced_variables": ["mandatory_grace_period_days"]
+    },
+    {
+      "clause_id": "Section 8.02",
+      "title": "Immediate Acceleration Remedy",
+      "original_text": "If any payment of principal or interest remains unpaid for five (5) Business Days after the scheduled payment date, the Administrative Agent may declare the entire loan immediately due and payable.",
+      "formula": "acceleration_threshold_days == 5",
+      "condition": "True",
+      "referenced_variables": ["acceleration_threshold_days"]
+    }
+  ],
+  "invariants": [
+    {
+      "invariant_id": "INV-TEMP-001",
+      "name": "Temporal Precedence: Cure Window Exceeds Acceleration Trigger",
+      "invariant_type": "temporal_precedence",
+      "description": "Remedial acceleration cannot be triggered at a day count strictly lower than the guaranteed statutory cure window.",
+      "formal_condition": "acceleration_threshold_days >= mandatory_grace_period_days",
+      "target_clause_ids": ["Section 8.01", "Section 8.02"]
+    }
+  ]
+}

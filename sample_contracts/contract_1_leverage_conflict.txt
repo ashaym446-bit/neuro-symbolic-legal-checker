@@ -1,0 +1,16 @@
+CREDIT AND GUARANTEE AGREEMENT
+Dated as of October 15, 2025
+among APEX INDUSTRIAL HOLDINGS LLC, as Borrower,
+THE LENDERS PARTY HERETO,
+and GLOBAL COMMERCE BANK, as Administrative Agent.
+
+ARTICLE VI: FINANCIAL COVENANTS
+
+Section 6.01. Consolidated Leverage Ratio.
+The Borrower shall not permit the Consolidated Leverage Ratio as of the end of any Fiscal Quarter of the Borrower to exceed 3.50 to 1.00; provided, however, that upon the consummation of any Material Permitted Acquisition (the 'Acquisition Period'), such maximum Consolidated Leverage Ratio threshold shall automatically step up to 4.00 to 1.00 for the four consecutive Fiscal Quarters immediately following such acquisition.
+
+Section 6.02. Maximum Consolidated Total Indebtedness.
+Notwithstanding Section 6.01 or any other provision herein to the contrary, in no event shall Consolidated Total Indebtedness of the Borrower and its Subsidiaries at any time exceed $30,000,000 in the aggregate whenever Consolidated EBITDA for the trailing twelve-month period is less than $8,000,000.
+
+Section 6.03. Minimum Interest Coverage Ratio.
+The Borrower shall maintain a Consolidated Interest Coverage Ratio (Consolidated EBITDA to Consolidated Interest Expense) of not less than 2.50 to 1.00 at all times.
