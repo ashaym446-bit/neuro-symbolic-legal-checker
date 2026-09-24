@@ -10,8 +10,8 @@ def build_simple_pdf():
     doc = SimpleDocTemplate(
         pdf_filename,
         pagesize=letter,
-        rightMargin=45, leftMargin=45,
-        topMargin=45, bottomMargin=45
+        rightMargin=40, leftMargin=40,
+        topMargin=40, bottomMargin=40
     )
 
     styles = getSampleStyleSheet()
@@ -20,43 +20,43 @@ def build_simple_pdf():
         'MainTitle',
         parent=styles['Heading1'],
         fontName='Helvetica-Bold',
-        fontSize=22,
-        leading=26,
+        fontSize=20,
+        leading=24,
         textColor=colors.HexColor('#1e40af'),
         alignment=1,
-        spaceAfter=6
+        spaceAfter=5
     )
 
     subtitle_style = ParagraphStyle(
         'SubTitle',
         parent=styles['Normal'],
         fontName='Helvetica-Oblique',
-        fontSize=11,
-        leading=15,
+        fontSize=10.5,
+        leading=14,
         textColor=colors.HexColor('#64748b'),
         alignment=1,
-        spaceAfter=20
+        spaceAfter=15
     )
 
     h1_style = ParagraphStyle(
         'H1',
         parent=styles['Heading2'],
         fontName='Helvetica-Bold',
-        fontSize=14,
-        leading=18,
+        fontSize=13,
+        leading=16,
         textColor=colors.HexColor('#0f172a'),
-        spaceBefore=14,
-        spaceAfter=8
+        spaceBefore=12,
+        spaceAfter=6
     )
 
     h2_style = ParagraphStyle(
         'H2',
         parent=styles['Heading3'],
         fontName='Helvetica-Bold',
-        fontSize=11.5,
-        leading=15,
+        fontSize=11,
+        leading=14,
         textColor=colors.HexColor('#2563eb'),
-        spaceBefore=10,
+        spaceBefore=8,
         spaceAfter=4
     )
 
@@ -64,43 +64,34 @@ def build_simple_pdf():
         'Body',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=9.5,
-        leading=13.5,
+        fontSize=9,
+        leading=13,
         textColor=colors.HexColor('#1e293b'),
-        spaceAfter=6
+        spaceAfter=5
     )
 
     bullet_style = ParagraphStyle(
         'Bullet',
         parent=body_style,
-        leftIndent=15,
-        spaceAfter=4
+        leftIndent=12,
+        spaceAfter=3
     )
 
     highlight_box_style = ParagraphStyle(
         'Highlight',
         parent=body_style,
         fontName='Helvetica-Bold',
-        fontSize=11,
-        leading=15,
+        fontSize=10,
+        leading=14,
         textColor=colors.HexColor('#1e3a8a')
-    )
-
-    table_header_style = ParagraphStyle(
-        'TH',
-        parent=styles['Normal'],
-        fontName='Helvetica-Bold',
-        fontSize=9,
-        leading=12,
-        textColor=colors.white
     )
 
     table_cell_style = ParagraphStyle(
         'TC',
         parent=styles['Normal'],
         fontName='Helvetica',
-        fontSize=8.5,
-        leading=11.5,
+        fontSize=8,
+        leading=11,
         textColor=colors.HexColor('#0f172a')
     )
 
@@ -115,11 +106,10 @@ def build_simple_pdf():
 
     # Title
     story.append(Paragraph("Neuro-Symbolic Legal Invariant Checker", title_style))
-    story.append(Paragraph("Plain-English Project Story, Dictionary of Terms & Professor Viva Cheat Sheet", subtitle_style))
+    story.append(Paragraph("Complete Plain-English Project Guide: Story, Dictionary, Pipeline & Professor Viva Prep", subtitle_style))
 
-    # Section 1
+    # Section 1: Summary
     story.append(Paragraph("1. The Entire Project in ONE Simple Sentence", h1_style))
-    
     quote_data = [[
         Paragraph(
             "<b>\"This project is an automated bug-checker for multi-million dollar bank loan contracts — "
@@ -129,19 +119,17 @@ def build_simple_pdf():
             highlight_box_style
         )
     ]]
-    t_quote = Table(quote_data, colWidths=[7.2 * inch])
+    t_quote = Table(quote_data, colWidths=[7.3 * inch])
     t_quote.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,-1), colors.HexColor('#eff6ff')),
         ('BOX', (0,0), (-1,-1), 1.5, colors.HexColor('#3b82f6')),
-        ('PADDING', (0,0), (-1,-1), 10),
+        ('PADDING', (0,0), (-1,-1), 8),
     ]))
     story.append(t_quote)
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 8))
 
     # Section 2: Financial Terms Dictionary
-    story.append(Paragraph("2. The 'Cheat Sheet' Dictionary: Financial Terms", h1_style))
-    story.append(Paragraph("Every financial word explained in plain everyday concepts:", body_style))
-
+    story.append(Paragraph("2. Plain-English Dictionary: Financial Words", h1_style))
     fin_terms = [
         ["Word", "What It Actually Means", "Real-Life Example"],
         [
@@ -152,7 +140,7 @@ def build_simple_pdf():
         [
             Paragraph("Borrower vs. Lender", table_bold_style),
             Paragraph("Borrower = Company taking money.<br/>Lender = Bank giving money.", table_cell_style),
-            Paragraph("If you take a home loan from SBI, you are Borrower, SBI is Lender.", table_cell_style)
+            Paragraph("If you take a loan from SBI, you are Borrower, SBI is Lender.", table_cell_style)
         ],
         [
             Paragraph("Covenant", table_bold_style),
@@ -176,8 +164,8 @@ def build_simple_pdf():
         ],
         [
             Paragraph("Interest Expense", table_bold_style),
-            Paragraph("The monthly fee/interest you pay the bank for borrowing.", table_cell_style),
-            Paragraph("Paying 5% interest fee on your loan.", table_cell_style)
+            Paragraph("The fee/interest you pay the bank for borrowing.", table_cell_style),
+            Paragraph("Paying 5% annual interest on your loan.", table_cell_style)
         ],
         [
             Paragraph("Grace Period", table_bold_style),
@@ -195,20 +183,19 @@ def build_simple_pdf():
             Paragraph("Striking through bad contract text and inserting the fix.", table_cell_style)
         ]
     ]
-
-    t_fin = Table(fin_terms, colWidths=[1.8*inch, 2.7*inch, 2.7*inch])
+    t_fin = Table(fin_terms, colWidths=[1.7*inch, 2.8*inch, 2.8*inch])
     t_fin.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#1e40af')),
         ('TEXTCOLOR', (0,0), (-1,0), colors.white),
         ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor('#cbd5e1')),
-        ('PADDING', (0,0), (-1,-1), 5),
+        ('PADDING', (0,0), (-1,-1), 4),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, colors.HexColor('#f8fafc')])
     ]))
     story.append(t_fin)
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 8))
 
     # Section 3: Technical Terms Dictionary
-    story.append(Paragraph("3. The 'Cheat Sheet' Dictionary: Technical & AI Terms", h1_style))
+    story.append(Paragraph("3. Plain-English Dictionary: AI & Computer Science Words", h1_style))
     tech_terms = [
         ["Word", "What It Actually Means", "Real-Life Example"],
         [
@@ -247,17 +234,16 @@ def build_simple_pdf():
             Paragraph("Translating 'Debt cannot exceed twice profit' into debt <= 2 * profit.", table_cell_style)
         ]
     ]
-
-    t_tech = Table(tech_terms, colWidths=[1.8*inch, 2.7*inch, 2.7*inch])
+    t_tech = Table(tech_terms, colWidths=[1.7*inch, 2.8*inch, 2.8*inch])
     t_tech.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#0f172a')),
         ('TEXTCOLOR', (0,0), (-1,0), colors.white),
         ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor('#cbd5e1')),
-        ('PADDING', (0,0), (-1,-1), 5),
+        ('PADDING', (0,0), (-1,-1), 4),
         ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, colors.HexColor('#f8fafc')])
     ]))
     story.append(t_tech)
-    story.append(Spacer(1, 10))
+    story.append(Spacer(1, 8))
 
     # Section 4: The Real-Life Story
     story.append(Paragraph("4. The Real-Life Story: Where Does the Bug Come From?", h1_style))
@@ -275,27 +261,62 @@ def build_simple_pdf():
         "This leads to lawsuits worth millions of dollars. Our software catches this in 19 milliseconds.",
         body_style
     ))
-    story.append(Spacer(1, 8))
+    story.append(Spacer(1, 6))
 
-    # Section 5: Why Not Normal ChatGPT?
-    story.append(Paragraph("5. Why Can't We Just Use Normal ChatGPT / LLMs?", h1_style))
+    # Section 5: The Pipeline (Deep Dive)
+    story.append(Paragraph("5. The Pipeline: How Data Moves From Start to Finish (Step-by-Step)", h1_style))
     story.append(Paragraph(
-        "If you paste a 100-page contract into ChatGPT and ask: <i>'Are there any math bugs?'</i>, <b>ChatGPT will guess</b>. "
-        "LLMs are text predictors, not math calculators. They hallucinate and miss subtle edge cases (like division by zero "
-        "when interest expense is $0). In banking, an 85% accurate tool is a 100% failure. You need 100% mathematical certainty.",
+        "Here is the complete journey of how a contract moves through your system, explained simply:",
         body_style
     ))
 
-    # Section 6: How the App Works
-    story.append(Paragraph("6. How Your Project Works (The 3 Easy Steps)", h1_style))
-    story.append(Paragraph("• <b>STEP 1: GEMINI (The Reader / Neural):</b> Reads messy English legal text and compiles it into clean math formulas (e.g. debt <= 4.0 * ebitda).", bullet_style))
-    story.append(Paragraph("• <b>STEP 2: Z3 SMT SOLVER (The Calculator / Symbolic):</b> Solves the formulas across all numbers in 19 milliseconds. It mathematically proves whether any number can trigger a contradiction.", bullet_style))
-    story.append(Paragraph("• <b>STEP 3: THE EXPLAINER (The Lawyer):</b> Takes Z3's counterexample numbers and drafts a plain-English redline amendment to cure the contract.", bullet_style))
+    pipeline_steps = [
+        ["Stage", "What Happens (In Plain English)", "Code Component"],
+        [
+            Paragraph("<b>Stage 1: Document Ingestion</b>", table_bold_style),
+            Paragraph("The user selects or uploads a contract (PDF or TXT). The system reads the pages and extracts the raw legal text into memory.", table_cell_style),
+            Paragraph("<code>core/parser.py</code><br/>Uses PyPDF", table_cell_style)
+        ],
+        [
+            Paragraph("<b>Stage 2: Neural Translation (Gemini)</b>", table_bold_style),
+            Paragraph("Gemini acts as an English-to-Math translator. It ignores fluff words and translates sentences into strict math equations (e.g. 'total_debt <= 4.0 * ebitda').", table_cell_style),
+            Paragraph("<code>core/neural_extractor.py</code><br/>Gemini 2.5 Flash", table_cell_style)
+        ],
+        [
+            Paragraph("<b>Stage 3: The Intermediate Blueprint (AST)</b>", table_bold_style),
+            Paragraph("The equations are stored in clean structured data models: Real numbers for money, Integers for days, and Booleans for yes/no states.", table_cell_style),
+            Paragraph("<code>core/dsl_schema.py</code><br/>Pydantic Models", table_cell_style)
+        ],
+        [
+            Paragraph("<b>Stage 4: SMT Solving (Z3 Engine)</b>", table_bold_style),
+            Paragraph("Microsoft Z3 takes the equations and tests all possible numbers from -inf to +inf. In 19ms, it mathematically proves whether any combination can break the rules.", table_cell_style),
+            Paragraph("<code>core/symbolic_verifier.py</code><br/>Z3 Theorem Prover", table_cell_style)
+        ],
+        [
+            Paragraph("<b>Stage 5: Legal Diagnosis & Redline</b>", table_bold_style),
+            Paragraph("If Z3 finds a bug, it outputs the proof numbers. The explainer converts those numbers into plain English and writes a replacement contract clause to fix it.", table_cell_style),
+            Paragraph("<code>core/explainer.py</code><br/>Automated Redliner", table_cell_style)
+        ],
+        [
+            Paragraph("<b>Stage 6: Interactive Dashboard</b>", table_bold_style),
+            Paragraph("The user sees green/red status badges, solver execution times, metrics, and suggested amendments on a clean web page. Includes an offline mode for zero-internet college demos.", table_cell_style),
+            Paragraph("<code>app.py</code><br/>Streamlit Web UI", table_cell_style)
+        ]
+    ]
+
+    t_pipe = Table(pipeline_steps, colWidths=[1.8*inch, 3.8*inch, 1.7*inch])
+    t_pipe.setStyle(TableStyle([
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#1d4ed8')),
+        ('TEXTCOLOR', (0,0), (-1,0), colors.white),
+        ('GRID', (0,0), (-1,-1), 0.5, colors.HexColor('#cbd5e1')),
+        ('PADDING', (0,0), (-1,-1), 4),
+        ('ROWBACKGROUNDS', (0,1), (-1,-1), [colors.white, colors.HexColor('#f8fafc')])
+    ]))
+    story.append(t_pipe)
     story.append(Spacer(1, 8))
 
-    # Section 7: Viva / Professor Q&A
-    story.append(Paragraph("7. Professor Defense / Viva Voce Cheat Sheet", h1_style))
-    
+    # Section 6: Professor Defense Cheat Sheet
+    story.append(Paragraph("6. Professor Defense / Viva Voce Cheat Sheet", h1_style))
     viva_qa = [
         ("Q1: What is your project about?",
          "\"Sir, financial loan contracts are hundreds of pages long and frequently contain contradictory borrowing limits. My project uses Gemini AI to read the contract into math formulas, and the Z3 SMT solver to mathematically prove whether any loopholes exist with 100% certainty.\""),
@@ -308,7 +329,6 @@ def build_simple_pdf():
         ("Q5: What did YOU do as a researcher?",
          "\"I designed the formal domain schema that translates legal English into SMT mathematics, formulated the invariant proof equations, built the Z3 verification engine, and benchmarked that our Neuro-Symbolic approach achieves 100% mathematical soundness compared to 62% for pure LLMs.\"")
     ]
-
     for q, a in viva_qa:
         story.append(Paragraph(f"<b>{q}</b>", h2_style))
         story.append(Paragraph(a, body_style))
