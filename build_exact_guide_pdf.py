@@ -5,7 +5,7 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Tabl
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 
 def build_pdf():
-    pdf_filename = "SIMPLE_PROJECT_EXPLANATION_GUIDE.pdf"
+    pdf_filename = "VIVA_STORY_AND_DICTIONARY_GUIDE.pdf"
     
     # 0.5 inch margins = 36 pt
     doc = SimpleDocTemplate(
