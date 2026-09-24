@@ -12,9 +12,14 @@ Your task is to analyze legal contract text and compile it into a formal Interme
 
 For each financial or temporal condition:
 1. Identify all numerical variables, states, and metrics (e.g. 'total_debt', 'ebitda', 'interest_expense', 'notice_days', 'cure_days', 'is_acquisition').
-2. Parse each covenant/clause into a clean, well-formed mathematical formula (e.g. 'total_debt / ebitda <= 3.5' or 'cure_days >= 15').
+2. Parse each covenant/clause into a clean, well-formed mathematical formula (e.g. 'total_debt <= 3.5 * ebitda' or 'cure_days >= 15').
 3. Formulate the core Legal Invariants that must logically hold to avoid default loops, contradictory caps, or impossible covenants.
-4. Output strictly according to the provided JSON schema.
+4. Formula syntax rules:
+   - Use standard operators: '<=', '>=', '==', '!=', '+', '-', '*', '/'.
+   - For logical implication, use '=>' (e.g. 'ebitda < 8000000 => total_debt <= 30000000').
+   - For conditions, use boolean logic ('and', 'or', 'not').
+   - Avoid pseudo-code like 'IMPLIES' or 'IF THEN ELSE'. Express conditions directly or use '=>'.
+5. Output strictly according to the provided JSON schema.
 """
 
 class NeuralContractExtractor:

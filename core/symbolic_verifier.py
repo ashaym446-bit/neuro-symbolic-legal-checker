@@ -24,12 +24,32 @@ class Z3ExpressionBuilder:
         if expr_str == "False":
             return z3.BoolVal(False)
 
-        # Handle simple implication 'A => B'
+        # Normalize unicode and casing
+        expr_str = expr_str.replace("≤", "<=").replace("≥", ">=").replace("≠", "!=")
+
+        # Handle 'IMPLIES' or '=>'
+        if " IMPLIES " in expr_str.upper():
+            import re
+            parts = re.split(r'\s+IMPLIES\s+', expr_str, flags=re.IGNORECASE, maxsplit=1)
+            left = self.parse_expr(parts[0])
+            right = self.parse_expr(parts[1])
+            return z3.Implies(left, right)
+
         if "=>" in expr_str:
             parts = expr_str.split("=>", 1)
             left = self.parse_expr(parts[0])
             right = self.parse_expr(parts[1])
             return z3.Implies(left, right)
+
+        # Handle 'IF condition THEN x ELSE y'
+        if expr_str.upper().startswith("IF ") or " THEN " in expr_str.upper():
+            import re
+            m = re.match(r'^\(?\s*IF\s+(.*?)\s+THEN\s+(.*?)\s+ELSE\s+(.*?)\s*\)?$', expr_str, re.IGNORECASE)
+            if m:
+                cond = self.parse_expr(m.group(1))
+                then_val = self.parse_expr(m.group(2))
+                else_val = self.parse_expr(m.group(3))
+                return z3.If(cond, then_val, else_val)
 
         try:
             tree = ast.parse(expr_str, mode='eval')
