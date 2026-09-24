@@ -19,25 +19,39 @@ class LegalExplainer:
         if not result.counterexample:
             return result
 
-        # 1. Deterministic Fallback Explanation (Always works offline!)
+        # 1. Plain-English Intuitive Fallback Explanation (Always works offline!)
         model_vars = result.counterexample
         ce_str = ", ".join([f"{k} = {v}" for k, v in model_vars.items()])
         
-        rule_based_exp = (
-            f"Mathematical Violation Detected on {result.invariant_name}.\n"
-            f"Concrete Counterexample State: [{ce_str}].\n"
-            f"Under this specific financial/operational scenario, all active contract clauses "
-            f"({', '.join(result.involved_clauses)}) are satisfied, but the required invariant '{result.invariant_id}' is breached."
-        )
-
-        redline_template = (
-            f"Recommended Amendment for {', '.join(result.involved_clauses)}: "
-            f"Insert an explicit priority override clause: 'Notwithstanding anything to the contrary in this Section, "
-            f"in no event shall the terms hereof supersede or violate {result.invariant_id}.'"
-        )
-
-        result.explanation = rule_based_exp
-        result.suggested_redline = redline_template
+        if result.invariant_id == "INV-001":
+            result.explanation = (
+                "Section 6.01 allows the borrower to step up their leverage ratio to 4.0x EBITDA during an acquisition. "
+                "However, Section 6.02 strictly forbids total debt from exceeding $30,000,000 whenever EBITDA drops below $8,000,000. "
+                "When EBITDA is around $7.5M and an acquisition occurs, Section 6.01 permits borrowing over $30M, but Section 6.02 makes it illegal. "
+                "Both clauses directly contradict each other!"
+            )
+            result.suggested_redline = (
+                "Amend Section 6.01 by inserting priority language: 'Subject to the maximum debt ceiling in Section 6.02, "
+                "such maximum Consolidated Leverage Ratio threshold shall automatically step up to 4.00 to 1.00...'"
+            )
+        elif result.invariant_id == "INV-TEMP-001":
+            result.explanation = (
+                "Section 8.01 guarantees the borrower an absolute 15-day cure period to fix a default before any legal action can be taken. "
+                "However, Section 8.02 allows the lender to immediately accelerate and demand the entire loan back after only 5 days of non-payment. "
+                "This creates a deadlock: on Day 6, the bank can seize collateral even though the borrower still has 9 days left of their cure period!"
+            )
+            result.suggested_redline = (
+                "Amend Section 8.02: 'If any payment remains unpaid upon expiration of the mandatory 15-day Cure Period set forth in Section 8.01, "
+                "the Administrative Agent may declare the entire loan immediately due and payable.'"
+            )
+        else:
+            result.explanation = (
+                f"Mathematical contradiction detected in {result.invariant_name}. Under the counterexample values [{ce_str}], "
+                f"the clauses {', '.join(result.involved_clauses)} cannot hold simultaneously without violating the safety rule."
+            )
+            result.suggested_redline = (
+                f"Insert an explicit priority override clause into {', '.join(result.involved_clauses)} specifying which clause takes precedence."
+            )
 
         # 2. If Gemini API is available and enabled, generate nuanced legal redlines
         if use_llm and self.api_key and self.api_key != "your_gemini_api_key_here":

@@ -25,8 +25,8 @@ class TestNeuroSymbolicVerifier(unittest.TestCase):
         
         # Test explainer fallback
         enriched = self.explainer.explain_counterexample(res, ast_model.clauses, use_llm=False)
-        self.assertIn("Mathematical Violation Detected", enriched.explanation)
-        self.assertIn("Recommended Amendment", enriched.suggested_redline)
+        self.assertIn("Section 6.01 allows the borrower", enriched.explanation)
+        self.assertIn("Amend Section 6.01", enriched.suggested_redline)
 
     def test_contract_2_temporal_deadlock(self):
         """Contract 2 should detect SAT on the 15-day grace period vs 5-day acceleration."""
