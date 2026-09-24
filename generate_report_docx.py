@@ -137,9 +137,7 @@ def create_report():
         ("01_app_dashboard.png", "Figure 1: Streamlit Interactive Dashboard", "The web dashboard showing contract selection, model settings, and execution mode toggle."),
         ("02_verification_complete.png", "Figure 2: Real-Time Verification Metrics", "Z3 SMT solver successfully verified 3 invariants in 19.2 milliseconds, identifying 1 violation."),
         ("03_counterexample_violation.png", "Figure 3: Mathematical Loophole Caught by Z3", "SMT solver flagged INV-003: When interest_expense = 0.0, evaluating EBITDA / Interest causes a division-by-zero loophole."),
-        ("04_legal_explanation_redline.png", "Figure 4: Automated Contractual Redline Amendment", "Institutional banking amendment drafted by the explainer to cure the division-by-zero flaw."),
-        ("05_api_usage_proof.png", "Figure 5: Google AI Studio Quota Proof", "Empirical proof of API safety: Exactly 2 requests used with 100% success rate and zero errors."),
-        ("06_token_consumption_graph.png", "Figure 6: Real Token Consumption Spike", "Total tokens consumed was only ~800 tokens out of a 250,000 tokens/minute allowance (0.32% consumption).")
+        ("04_legal_explanation_redline.png", "Figure 4: Automated Contractual Redline Amendment", "Institutional banking amendment drafted by the explainer to cure the division-by-zero flaw.")
     ]
 
     for fname, title, desc in screenshots:
